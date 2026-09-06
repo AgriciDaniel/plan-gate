@@ -72,4 +72,4 @@ alternative as a reason to discount the plan's confidence.
 ## Limits
 
 n=1 per arm. The gated arm's executor was never run, so the true cost multiplier
-is unmeasured. Per `orchestrate`: "Single runs lie in both directions."
+is unmeasured. Single runs lie in both directions.

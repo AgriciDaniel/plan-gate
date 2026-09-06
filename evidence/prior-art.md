@@ -39,7 +39,7 @@ https://github.com/openai/codex/issues/33974
 **anilcancakir/claude-code** independently reached our central conclusion: it
 enforces read-only review by capability, not permission mode. Its `auto-verifier`
 "holds no `Edit`, `Write` or `Agent`" tool. It also does per-step tier routing
-across haiku/sonnet/opus, which is exactly Daniel's original framing, and runs an
+across haiku/sonnet/opus, which is exactly the framing this started from, and runs an
 adversarial chain where the plan reviewer reads the plan cold and the code
 reviewer sees only the diff.
 
@@ -71,5 +71,5 @@ the adversarial reviewer.
 - **A full execution engine.** `optim-plans` removed theirs on purpose. Our A/B
   says the same thing: the gate is worth less than the planning quality.
 - **Rewriting to match any of these.** They are bigger and solve a broader
-  problem. Ours stays small and covers what happens after `orchestrate` has
-  already decided to delegate.
+  problem. Ours stays small and covers only what happens after the decision to
+  delegate has already been made.

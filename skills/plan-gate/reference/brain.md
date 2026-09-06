@@ -4,8 +4,9 @@ Verified facts this skill depends on, each with the evidence that established it
 Claims are separated by how they were checked. Re-verify anything marked with a
 version or a date before relying on it in a later release.
 
-Routing economics live in `orchestrate` and are not duplicated here. See
-`~/.claude/skills/orchestrate/SKILL.md` and `reference/codex-handoff.md`.
+Routing economics (which tier, which billing pool, inline or delegated) are a
+separate concern and are not duplicated here. This skill covers only what happens
+after you have already decided to delegate.
 
 ## Harness: subagents and permission modes
 
@@ -21,7 +22,7 @@ overridden. If the parent uses auto mode, the subagent inherits auto mode and an
 `permissionMode` in its frontmatter is ignored: the classifier evaluates the
 subagent's tool calls with the same block and allow rules as the parent session."
 
-Daniel runs `permissions.defaultMode: auto`, so this is the normal case. But the
+If your `permissions.defaultMode` is `auto`, this is your normal case. But the
 gate also fails open under `acceptEdits` and `bypassPermissions`, which makes
 `permissionMode: plan` unreliable in the majority of realistic parent states.
 
@@ -81,16 +82,16 @@ https://github.com/openai/codex/issues/33974
 **Only `spark` is aliased.** `MODEL_ALIASES` at `codex-companion.mjs:72` maps
 `spark` to `gpt-5.3-codex-spark`; every other `--model` value passes through as a
 raw ID. The Codex UI tier names (Terra, Luna, Sol) will not resolve. Local default
-is `model = "gpt-6-astra"` in `~/.codex/config.toml`. Checked 2026-09-05. The 5.6
-tier table in `orchestrate/reference/tiers.md` looks stale against this.
+comes from `~/.codex/config.toml`, which on the machine this was built on was
+`gpt-6-astra`, a model absent from the older 5.6 tier tables in circulation. Check
+your own config rather than assuming a tier name resolves.
 
 **Codex's sandbox cannot nest inside the VS Code Flatpak.** bubblewrap will not
 run nested, so the sandbox fails before any command runs and Codex returns empty
 results **while exiting 0**. A silent failure that reads as a valid empty plan.
-From Daniel's own sessions, 2026-07-09 and later. Treat an empty plan as a failure
-needing retry. `scripts/preflight.sh` detects this. Cross-links:
-`[[codex-flatpak-sandbox]]`, `[[codex-sandbox-needs-host-spawn]]`,
-`[[codex-cannot-write-in-flatpak-sandbox]]`.
+Observed repeatedly from 2026-07-09 onward. Treat an empty plan as a failure
+needing retry, never as an answer. `scripts/preflight.sh` detects the condition
+before you spend a call on it.
 
 **Do not route the gate through `codex:codex-rescue`.** That agent is a strict
 single-call forwarder and defaults to `--write`. Call the companion directly.
@@ -112,7 +113,7 @@ One A/B, identical fixtures, Sonnet both arms, on a specified two-file task.
 - Both planners manufactured fake rejected alternatives when `approach` demanded
   one. The control agent said so itself: "I invented two alternatives here that I
   never seriously considered." A schema field can induce dishonesty.
-- n=1 per arm. Per `orchestrate`: "Single runs lie in both directions."
+- n=1 per arm. Single runs lie in both directions.
 
 ### Lane B live test, 2026-09-05
 
@@ -132,7 +133,7 @@ fresh threads, plan passed as text.
 
 - Never claim the gate saved quota unless the work ran on Lane B. Every Claude
   model bills the same subscription pool.
-- A plan is not verification. Per `orchestrate`, a cheap tier is only safe behind a
+- A plan is not verification. A cheap tier is only safe behind a
   check it did not write.
 - An empty or truncated Codex result is a failure, never an empty plan.
 

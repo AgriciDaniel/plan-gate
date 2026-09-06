@@ -17,8 +17,8 @@ where writing a plan costs more than redoing the work.
 Measured: this produced honest disclosure of five unrequested decisions at zero
 extra cost. Use this far more often than the full gate.
 
-**3. The full gate.** Only on `orchestrate`'s escalation triggers: more than 3
-files, root-causing rather than localizing, over about an hour of work, ambiguous
+**3. The full gate.** Only when the work is genuinely uncertain: more than 3 files,
+root-causing rather than localizing, over about an hour of work, ambiguous
 requirements, subtle state, two retries burned, or two agents on overlapping
 surfaces.
 
@@ -61,16 +61,14 @@ valid empty plan. Treat an empty plan as a failure needing retry, never an answe
 
 ## Still open
 
-**Codex pricing in `~/.claude/skills/orchestrate/reference/tiers.md` is stale.**
-It prices a 5.6 line (Sol / Terra / Luna) while your `~/.codex/config.toml` runs
-`gpt-6-astra`, which is absent from the table. Those tier names are Codex UI
-labels and will not resolve as `--model` values; only `spark` is aliased in
-`codex-companion.mjs:72`.
+**Codex tier names are not CLI model IDs.** Sol, Terra and Luna are Codex UI
+labels and will not resolve if you pass them to `--model`. Only `spark` is aliased,
+in `codex-companion.mjs:72`. Leave `--model` unset to inherit whatever
+`~/.codex/config.toml` sets, or pass a real model ID.
 
-The file carries a dated caveat saying exactly this. The numbers were left alone
-on purpose rather than rewritten from memory. To close it: get current OpenAI
-pricing from a primary source and replace the table, or delete the prices and keep
-only the routing advice.
+If you keep your own routing or pricing notes for Codex tiers, check them against
+current OpenAI pricing before trusting a number. Pricing moves and stale tables are
+worse than no table.
 
 ## What was deliberately not built
 
@@ -90,4 +88,3 @@ only the routing advice.
 | This bundle | portable copy, `./install.sh` to redeploy |
 | Facts and citations | `skills/plan-gate/reference/brain.md` |
 | Test evidence | `evidence/` |
-| Session findings | `~/.claude/projects/-var-home-agricidaniel-Desktop-best-of-the-best-ever/memory/` |

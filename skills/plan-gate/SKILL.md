@@ -16,9 +16,9 @@ Delegate the labour to a cheap tier. Keep the judgment on the orchestrator.
 The gate is the checkpoint that stops a weak model executing confidently in the
 wrong direction.
 
-Routing (which tier, which pool, inline or delegated) belongs to `orchestrate`.
-Read that first. This skill covers only what happens **after** you have decided
-to delegate.
+Routing (which tier, which pool, inline or delegated) is a separate decision and
+is out of scope here. This skill covers only what happens **after** you have
+decided to delegate.
 
 Every harness and Codex fact this skill relies on, with its evidence, is in
 `reference/brain.md`. Check there before trusting a claim in this file.
@@ -37,9 +37,10 @@ model not to write is not a gate.
 
 ## When to gate
 
-Gate when **any** of `orchestrate`'s escalation triggers hold: more than 3 files,
-root-causing rather than localizing, horizon beyond about an hour of human work,
-ambiguous requirements, concurrency or subtle state, two retries already burned.
+Gate when **any** of these hold: the change touches more than 3 files, you are
+root-causing rather than localizing, the horizon is beyond about an hour of human
+work, requirements are ambiguous, there is concurrency or subtle state, or two
+retries have already been burned.
 
 Add one trigger of this skill's own:
 
@@ -97,8 +98,8 @@ Lane A does not save quota. On a subscription every Claude model bills the same
 weekly pool, so a Sonnet planner is a quality control, not a cost control. Say so
 honestly rather than claiming a saving that did not happen.
 
-Lane B is the only lane that changes the billing pool. See
-`~/.claude/skills/orchestrate/reference/codex-handoff.md`.
+Lane B is the only lane that changes the billing pool, because it runs on a
+different vendor's subscription.
 
 ## Lane A: Claude subagent
 
@@ -182,8 +183,8 @@ handoff, not a conversation, so an unanswered question becomes an assumption.
 
 ## Verify
 
-The plan is not the verification. Per `orchestrate`: a cheap tier is only safe
-behind a check it did not write. Ordered strongest first: compile or type check,
+The plan is not the verification. A cheap tier is only safe behind a check it did
+not write. Ordered strongest first: compile or type check,
 lint, a reproduction written before the fix, the real suite, then a fresh-context
 reviewer seeing only the diff.
 
