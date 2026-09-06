@@ -4,7 +4,7 @@
   <img src="assets/cover-plan-gate.jpg" alt="Plan Gate cover" width="100%">
 </p>
 
-**A Claude Code skill that makes a cheap agent show you its plan before it is allowed to touch anything.**
+**A plan-first gate for AI coding agents. It makes a cheap model show you its plan before it is allowed to touch anything.**
 
 Here is the skill, here is what it does, here is how to install it.
 
@@ -14,8 +14,22 @@ You delegate work to a cheaper model. It explores the code read-only, hands back
 
 Two ways to run it:
 
-- **Lane A**, a Claude subagent restricted to read-only tools.
+- **Lane A**, a subagent restricted to read-only tools.
 - **Lane B**, Codex running inside a read-only OS sandbox.
+
+## Which agents
+
+The method is agent-agnostic. The enforcement is not, because every runtime restricts capability differently.
+
+| | Status |
+|---|---|
+| **Claude Code** | Enforced and tested. Read-only `tools:` allowlist |
+| **Codex / GPT** | Enforced and tested. Read-only OS sandbox |
+| **Cursor, Gemini CLI, Copilot, others** | Method and documents port directly. You supply the capability restriction |
+
+The plan schema and the review checklist are plain Markdown and carry no vendor assumptions, so they work anywhere. `SKILL.md` follows the Agent Skills format. What does not port is the enforcement primitive: `agents/plan-gate-planner.md` and `audit.sh` read Claude Code's agent format specifically.
+
+The important part transfers even when the wiring does not: **restrict the capability, do not ask the model nicely.** A prompt telling a model not to write is not a gate, in any runtime.
 
 ## Install
 
@@ -26,6 +40,8 @@ cd plan-gate
 ```
 
 Restart Claude Code. Agent files load at session start.
+
+For other agents, copy `skills/plan-gate/` where your runtime reads skills, and replace the Lane A planner with whatever read-only restriction that runtime offers.
 
 ```bash
 ./install.sh --dry-run   # preview first, backs up anything it would replace
@@ -84,6 +100,7 @@ So the honest default is **do not gate**. Use level 2 most days. Full evidence i
 
 - **The reviewer is a model.** The orchestrator approving a plan is a model approving a model. On anything hard to unwind, a human should approve.
 - **Tested once per arm.** Single runs mislead in both directions.
+- **Only two runtimes are wired up.** Claude Code and Codex are enforced and tested. Everything else needs its own restriction primitive.
 - **Codex needs a real sandbox.** Its sandbox cannot run inside the VS Code Flatpak. It fails and returns empty results while exiting 0, which reads like a valid empty plan. Run `/plan-gate preflight` first and treat an empty plan as a failure.
 
 ## License

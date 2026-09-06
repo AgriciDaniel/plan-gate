@@ -11,3 +11,7 @@ __pycache__/
 # Local-only, kept on disk but out of the repo
 best ever sub-agents execution.txt
 assets/.banana-*
+
+# Cover intermediates, ~5MB. See assets/README.md to regenerate.
+assets/cover-plan-gate.svg
+assets/cover-plan-gate.art.jpg

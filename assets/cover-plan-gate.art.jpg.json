@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-06T15:55:04.390451+00:00",
+  "provider": "Google Gemini Developer API",
+  "model": "gemini-3.1-flash-image",
+  "operation": "generate",
+  "aspect_ratio": "21:9",
+  "image_size": "2K",
+  "store": false,
+  "prompt_sha256": "0ec84e4fcfa0794b73ed3b1d17254b4359e1675ee72f87e4666c0184d4e8c700",
+  "visual_brief_schema_version": "banana.visual-brief.v1",
+  "brief_sha256": "ef26d9c24dc0c915c821fdb437689cde27fda0adecfc239f7e5f5ead49b37d8c",
+  "brief_source": "planner_minimal",
+  "references": [],
+  "artifact": {
+    "path": "/var/home/agricidaniel/Desktop/best of the best ever/assets/banana_20260906T155504_387787Z_plan-gate-cover-v2.jpg",
+    "mime_type": "image/jpeg",
+    "bytes": 2263313,
+    "sha256": "d5f8f10f9a132fc720d982241e45230deebc67a19e7cd997dbf04eebdac10e3c",
+    "width": 3168,
+    "height": 1344
+  },
+  "usage": {
+    "total_tokens": 1515
+  },
+  "grounding_used": false,
+  "provenance_notice": "Google documents SynthID on Gemini-generated images. Post-processing may alter provenance metadata."
+}
