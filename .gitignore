@@ -1,0 +1,13 @@
+# Local scratch
+plans/
+*.bak-*
+__pycache__/
+.DS_Store
+
+# Never commit secrets
+.env
+*.key
+
+# Local-only, kept on disk but out of the repo
+best ever sub-agents execution.txt
+assets/.banana-*
